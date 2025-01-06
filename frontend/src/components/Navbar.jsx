@@ -26,8 +26,8 @@ function Navbar() {
             <span className="ml-2 text-xl font-bold text-gray-900">TaskFlow</span>
           </div>
           <div className="hidden md:flex items-center gap-x-8">
-            <Link to="/" className="text-gray-600 hover:text-indigo-600">Home</Link>
-            <Link to="/add" className="text-gray-600 hover:text-indigo-600">Tasks</Link>
+            <Link to="/" className="text-gray-600 hover:text-indigo-600">Tasks</Link>
+            <Link to="/add" className="text-gray-600 hover:text-indigo-600">Add</Link>
             <Link to="/user" className="text-gray-600 hover:text-indigo-600">Profile</Link>
           </div>
           <div className="hidden md:flex items-center gap-x-4 text-gray-600">
@@ -49,8 +49,8 @@ function Navbar() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-2 space-y-2 bg-gray-50 p-4 rounded shadow-md">
-            <Link to="/" className="block text-gray-600 hover:text-indigo-600">Home</Link>
-            <Link to="/add" className="block text-gray-600 hover:text-indigo-600">Tasks</Link>
+            <Link to="/" className="block text-gray-600 hover:text-indigo-600">Tasks</Link>
+            <Link to="/add" className="block text-gray-600 hover:text-indigo-600">Add</Link>
             <Link to="/user" className="block text-gray-600 hover:text-indigo-600">Profile</Link>
             <button onClick={logout} className="w-full mt-4 px-4 py-2 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700">
               Logout

@@ -4,6 +4,7 @@ require("dotenv").config();
 const cors = require('cors');
 const User = require("./models/userSchema");
 const authRoutes = require('./routes/authRouter')
+const taskRoutes = require('./routes/taskRouter')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 app.use('/api/auth',authRoutes)
+app.use('/api/task',taskRoutes)
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
