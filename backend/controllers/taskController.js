@@ -27,8 +27,10 @@ const updateTask = (req, res) => {
   res.send("Add Task ");
 };
 
-const showTask = (req, res) => {
-  res.send("Add Task ");
+const showTask = async (req, res) => {
+  const userId = req.user._id;
+  const tasks = await Task.find({user:userId});
+  res.json(tasks);
 };
 
 const deleteTask = (req, res) => {

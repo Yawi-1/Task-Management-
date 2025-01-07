@@ -16,8 +16,6 @@ function AuthForm() {
   const location = useLocation();
   const navigate = useNavigate(); 
 
-  console.log(location);
-  console.log(user);
 
   // Redirect if user is already logged in
   useEffect(() => {
