@@ -1,57 +1,31 @@
 import React, { useState } from "react";
 import { Calendar, Clock } from "lucide-react";
 import Layout from "./Layout";
-import axios from "axios";
 import Spinner from "./Spinner";
-import toast from "react-hot-toast";
+import { useTask } from "../context/TaskContext";
 
 function TaskForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [dueTime, setDueTime] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const endpoint = "http://localhost:8080/api/task/add";
+  const {
+    title,
+    description,
+    dueDate,
+    dueTime,
+    setTitle,
+    setDescription,
+    setDueDate,
+    setDueTime,
+    loading,
+    addTask,
+  } = useTask();
 
   const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    return today.toISOString().split("T")[0];
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const user = localStorage.getItem("user");
-
-    const token = JSON.parse(user).token;
-
-    try {
-      const { data } = await axios.post(
-        endpoint,
-        { title, description, dueDate, dueTime },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Task added")
-      // Clear inputs after successful submission
-      setTitle("");
-      setDescription("");
-      setDueDate("");
-      setDueTime("");
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        console.error("Unauthorized: Token may be invalid or expired");
-      } else {
-        console.error("Error at adding task....", error);
-      }
-    } finally {
-      setLoading(false);
-    }
+    addTask();
   };
 
   return (
@@ -73,7 +47,7 @@ function TaskForm() {
             type="text"
             id="title"
             required
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 px-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -90,7 +64,7 @@ function TaskForm() {
           <textarea
             id="description"
             rows={3}
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 px-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
