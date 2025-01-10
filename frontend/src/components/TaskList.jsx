@@ -5,9 +5,10 @@ import Layout from "./Layout";
 import { useTask } from "../context/TaskContext";
 import Spinner from "./Spinner";
 import toast from "react-hot-toast";
+import axios from 'axios';
 
 function TaskList() {
-  const { tasks, loading } = useTask();
+  const { tasks, loading,endpoint,showTasks } = useTask();
 
   const formatDate = (dateString) => {
     const options = {
@@ -44,14 +45,18 @@ function TaskList() {
   const handleStatusChange = async (id, newStatus) => {
     try {
       // Add API call to update the status
-      await axios.put(`http://localhost:8080/api/task/${id}`, {
+     const {data} =  await axios.put(`${endpoint}/${id}`, {
         status: newStatus,
       });
+      showTasks();
+      console.log('data',data)
       toast.success(`Task status updated to ${newStatus}`);
     } catch (error) {
+      console.log(error)
       toast.error("Failed to update status.");
     }
   };
+
 
   const handleDelete = async (id) => {
     try {
@@ -107,7 +112,7 @@ function TaskList() {
                   <div className="flex items-center text-sm text-gray-500">
                     <span
                       className={`px-2 py-1 rounded-md text-sm ${
-                        task.status === "completed"
+                        task.status === "Completed"
                           ? "bg-green-100 text-green-600"
                           : "bg-yellow-100 text-yellow-600"
                       }`}
@@ -122,11 +127,11 @@ function TaskList() {
                   onClick={() =>
                     handleStatusChange(
                       task._id,
-                      task.status === "completed" ? "pending" : "completed"
+                      task.status === "Completed" ? "Pending" : "Completed"
                     )
                   }
                   className={`p-2 rounded-full transition-colors ${
-                    task.status === "completed"
+                    task.status === "Completed"
                       ? "bg-green-100 text-green-600 hover:bg-green-200"
                       : "bg-yellow-100 text-yellow-600 hover:bg-yellow-200"
                   }`}

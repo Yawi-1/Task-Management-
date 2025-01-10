@@ -62,7 +62,6 @@ export const TaskContextProvider = (props) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data)
       setTasks(data);
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -94,6 +93,8 @@ export const TaskContextProvider = (props) => {
         addTask,
         tasks,
         setTasks,
+        endpoint,
+        showTasks,
       }}
     >
       {props.children}
